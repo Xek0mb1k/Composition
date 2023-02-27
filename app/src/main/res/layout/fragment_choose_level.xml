@@ -11,21 +11,25 @@
         android:textSize="24sp"
         android:textStyle="bold" />
     <Button
+        android:id="@+id/test_level_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/test_level"/>
 
     <Button
+        android:id="@+id/easy_level_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/easy_level"
         android:backgroundTint="@color/green"/>
     <Button
+        android:id="@+id/normal_level_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/normal_level"
         android:backgroundTint="@color/yellow"/>
     <Button
+        android:id="@+id/hard_level_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/hard_level"
