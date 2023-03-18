@@ -7,12 +7,17 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import com.xekombik.composition.R
 import com.xekombik.composition.databinding.FragmentGameBinding
 import com.xekombik.composition.databinding.FragmentGameFinishedBinding
 import com.xekombik.composition.domain.entity.GameResult
 
 class GameFinishedFragment : Fragment() {
+
+
+
+
     private lateinit var gameResult: GameResult
 
     private var _binding: FragmentGameFinishedBinding? = null
@@ -43,10 +48,53 @@ class GameFinishedFragment : Fragment() {
                     retryGame()
                 }
             })
+
+
+        bindViews()
+
         binding.tryAgainButton.setOnClickListener {
             retryGame()
         }
 
+    }
+
+    private fun bindViews() {
+        with(binding){
+            emojiResult.setImageResource(getSmileResource())
+            tvRequiredAnswers.text = String.format(
+                getString(R.string.required_answers),
+                gameResult.gameSettings.minCountOfRightAnswers
+            )
+            tvScore.text = String.format(
+                getString(R.string.your_score),
+                gameResult.countOfRightAnswers
+            )
+            tvRequiredPercentAnswers.text = String.format(
+                getString(R.string.required_percent_true_answers),
+                gameResult.gameSettings.minPercentOfRightAnswers
+            )
+            tvPercentTrueAnswers.text = String.format(
+                getString(R.string.percent_true_answers),
+                getPercentOfRightAnswers()
+
+            )
+
+
+        }
+    }
+
+    private fun getPercentOfRightAnswers() = with(gameResult) {
+        if (countOfQuestions == 0){
+            0
+        }else
+            ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
+    }
+
+    private fun getSmileResource(): Int {
+        return if(gameResult.winner)
+            R.drawable.smile
+        else
+            R.drawable.sad
     }
 
     override fun onDestroyView() {
